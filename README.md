@@ -33,7 +33,8 @@ using extends and super event can be use in custom classes
 ```
 const EventEmitter = require("node:events")
 const emitter = new EventEmitter()
-emitter.emit("defected product", 2, 8)
+emitter.emit("defected product", a, b)
+emtter.on("defected product",callback({a,b}))
 ```
 ### FS
 ```
@@ -105,12 +106,94 @@ readableStream.pipe(writeableStream)
 ```
 
 ## HTTP
+### Plain text
 ```
 const http = require("node:http")
 
 const server = http.createServer((req, res) => {
     res.writeHead(200, { "Content-type": "text/plain" })
     res.end("hello world")
+})
+
+server.listen(3000, () => {
+    console.log("listening to port 3000")
+})
+```
+### Json 
+```
+const http = require("node:http")
+
+const profile = {
+    name: "dhuruv",
+    lastname: "bansal"
+}
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-type": "application/json" })
+    res.end(JSON.stringify(profile))
+})
+
+server.listen(3000, () => {
+    console.log("listening to port 3000")
+})
+```
+### HTML
+```
+const http = require("node:http")
+const fs = require("node:fs")
+
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { "Content-type": "text/html" })
+    fs.createReadStream(__dirname + "/index.html").pipe(res)
+})
+
+server.listen(3000, () => {
+    console.log("listening to port 3000")
+})
+```
+For dinamic html
+```
+const http = require("node:http")
+const fs = require("node:fs")
+
+const profile = {
+    name: "dhuruv",
+    lastname: "bansal"
+}
+
+const server = http.createServer((req, res) => {
+    const name = "shubham"
+    res.writeHead(200, { "Content-type": "text/html" })
+    let html = fs.readFileSync(__dirname + "/index.html", "utf-8")
+    html = html.replace("{name}", name)
+    res.end(html)
+})
+
+server.listen(3000, () => {
+    console.log("listening to port 3000")
+})
+```
+### Routing
+```
+const http = require("node:http")
+const fs = require("node:fs")
+
+const profile = {
+    name: "dhuruv",
+    lastname: "bansal"
+}
+
+const server = http.createServer((req, res) => {
+    if (req.url === "/home") {
+        res.writeHead(200, { "Content-type": "text/plain" })
+        res.end("home")
+    } else if (req.url === "/about") {
+        res.writeHead(200, { "Content-type": "text/plain" })
+        res.end("about")
+    } else {
+        res.writeHead(200, { "Content-type": "text/plain" })
+        res.end("page not found")
+    }
 })
 
 server.listen(3000, () => {
