@@ -1,27 +1,35 @@
 # Node
 
 ## V8 Engine
+
 To run JavaScript code, you need an engine to convert it to machine code before it can be executed. Chrome's V8 is one such open-source engine that allows embedding other code. This is where Node.js comes into the picture; it's a JavaScript runtime that enables you to use JavaScript code while providing the functionality of C++.
 
 ## Node Modules
+
 ```
 function(exports,require,module,__filename,__dirname){
     module code here
 }()
 ```
+
 ### module
+
 ```
 module.exports = Calculator;
 const Calculator = require("./calculator.js")
 ```
 
 ### exports
+
 ```
 exports.language = "js"\
 console.log(person.language)
 ```
+
 ## Buil-in Modules
+
 ### Path
+
 ```
 const path = require("node:path")
 const p = path.parse("calculator.js")
@@ -29,22 +37,30 @@ const p2 = path.format(p)
 ```
 
 ### Event
+
 using extends and super event can be use in custom classes
+
 ```
 const EventEmitter = require("node:events")
 const emitter = new EventEmitter()
 emitter.emit("defected product", a, b)
 emtter.on("defected product",callback({a,b}))
 ```
+
 ### FS
+
 ```
 const fs = require("node:fs")
 ```
+
 for sycn
+
 ```
 const data = fs.readFileSync("./dummytext.txt", "utf-8")
 ```
+
 for async
+
 ```
 fs.readFile("dummytext.txt", "utf-8", (err, data) => {
     if (err) {
@@ -53,10 +69,13 @@ fs.readFile("dummytext.txt", "utf-8", (err, data) => {
     console.log(data)
 })
 ```
+
 promise way
+
 ```
 const fs = require("node:fs/promises")
 ```
+
 ```
 fs.readFile("dummytext.txt", "utf-8")
     .then((data) => {
@@ -68,17 +87,20 @@ fs.readFile("dummytext.txt", "utf-8")
 ```
 
 ## Stream
+
 A sequence of data being transfer from A-->B is called stream\
 Works with data in chunks\
 stream inherits from event emitter\
 other modules such as fs use stream internally\
 
 ### Type of streams
-***Readable stream***\
-***writeable stream***\
-***Duplex stream*** (Both read and write)\
-***Transforms stream***(modify as its writen and read)\
+
+**_Readable stream_**\
+**_writeable stream_**\
+**_Duplex stream_** (Both read and write)\
+**_Transforms stream_**(modify as its writen and read)\
 use fs, fs/promise not working\
+
 ```
 const readableStream = fs.createReadStream("dummytext.txt", {
     encoding: "utf-8",
@@ -95,6 +117,7 @@ readableStream.on("data", (chunk) => {
 ```
 
 ## Pipe
+
 ```
 const readableStream = fs.createReadStream("dummytext.txt", {
     encoding: "utf-8",
@@ -106,7 +129,9 @@ readableStream.pipe(writeableStream)
 ```
 
 ## HTTP
+
 ### Plain text
+
 ```
 const http = require("node:http")
 
@@ -119,7 +144,9 @@ server.listen(3000, () => {
     console.log("listening to port 3000")
 })
 ```
-### Json 
+
+### Json
+
 ```
 const http = require("node:http")
 
@@ -137,7 +164,28 @@ server.listen(3000, () => {
     console.log("listening to port 3000")
 })
 ```
+
+### Crypto
+
+```
+import crypto from "crypto";
+export function hashPassword(password: string, salt: string) {
+  return new Promise((resolve, reject) => {
+    crypto.scrypt(password.normalize(), salt, 64, (err, hash) => {
+      if (err) reject(err);
+      resolve(hash.toString("hex").normalize());
+    });
+  });
+}
+
+export function generateSalt() {
+  return crypto.randomBytes(154).toString("hex").normalize();
+}
+
+```
+
 ### HTML
+
 ```
 const http = require("node:http")
 const fs = require("node:fs")
@@ -151,7 +199,9 @@ server.listen(3000, () => {
     console.log("listening to port 3000")
 })
 ```
+
 For dinamic html
+
 ```
 const http = require("node:http")
 const fs = require("node:fs")
@@ -173,7 +223,9 @@ server.listen(3000, () => {
     console.log("listening to port 3000")
 })
 ```
+
 ### Routing
+
 ```
 const http = require("node:http")
 const fs = require("node:fs")
@@ -199,4 +251,25 @@ const server = http.createServer((req, res) => {
 server.listen(3000, () => {
     console.log("listening to port 3000")
 })
+```
+
+### BODY
+
+```
+const getBody = async (req: http.IncomingMessage): Promise<BodyType | false> => {
+  const promise: Promise<BodyType | false> = new Promise((resolve, reject) => {
+    req.on("data", (chunk) => {
+      const data = chunk.toString(); // Convert Buffer to string
+      const parsedBody = JSON.parse(data);
+      try {
+        const body = BodySchema.parse(parsedBody);
+        resolve(body);
+      } catch {
+        reject(false);
+      }
+    });
+  });
+  return await promise;
+};
+
 ```
