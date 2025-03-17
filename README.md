@@ -6,7 +6,7 @@ To run JavaScript code, you need an engine to convert it to machine code before 
 
 ## Node Modules
 
-```
+```js
 function(exports,require,module,__filename,__dirname){
     module code here
 }()
@@ -14,14 +14,14 @@ function(exports,require,module,__filename,__dirname){
 
 ### module
 
-```
+```js
 module.exports = Calculator;
 const Calculator = require("./calculator.js")
 ```
 
 ### exports
 
-```
+```js
 exports.language = "js"\
 console.log(person.language)
 ```
@@ -30,7 +30,7 @@ console.log(person.language)
 
 ### Path
 
-```
+```js
 const path = require("node:path")
 const p = path.parse("calculator.js")
 const p2 = path.format(p)
@@ -40,7 +40,7 @@ const p2 = path.format(p)
 
 using extends and super event can be use in custom classes
 
-```
+```js
 const EventEmitter = require("node:events")
 const emitter = new EventEmitter()
 emitter.emit("defected product", a, b)
@@ -49,19 +49,19 @@ emtter.on("defected product",callback({a,b}))
 
 ### FS
 
-```
+```js
 const fs = require("node:fs")
 ```
 
 for sycn
 
-```
+```js
 const data = fs.readFileSync("./dummytext.txt", "utf-8")
 ```
 
 for async
 
-```
+```js
 fs.readFile("dummytext.txt", "utf-8", (err, data) => {
     if (err) {
         console.log(err)
@@ -72,7 +72,7 @@ fs.readFile("dummytext.txt", "utf-8", (err, data) => {
 
 promise way
 
-```
+```js
 const fs = require("node:fs/promises")
 ```
 
@@ -101,7 +101,7 @@ other modules such as fs use stream internally\
 **_Transforms stream_**(modify as its writen and read)\
 use fs, fs/promise not working\
 
-```
+```js
 const readableStream = fs.createReadStream("dummytext.txt", {
     encoding: "utf-8",
     //decide chunck size
@@ -118,7 +118,7 @@ readableStream.on("data", (chunk) => {
 
 ## Pipe
 
-```
+```js
 const readableStream = fs.createReadStream("dummytext.txt", {
     encoding: "utf-8",
     //decide chunck size
@@ -132,7 +132,7 @@ readableStream.pipe(writeableStream)
 
 ### Plain text
 
-```
+```js
 const http = require("node:http")
 
 const server = http.createServer((req, res) => {
@@ -147,7 +147,7 @@ server.listen(3000, () => {
 
 ### Json
 
-```
+```js
 const http = require("node:http")
 
 const profile = {
@@ -167,7 +167,7 @@ server.listen(3000, () => {
 
 ### Crypto
 
-```
+```js
 import crypto from "crypto";
 export function hashPassword(password: string, salt: string) {
   return new Promise((resolve, reject) => {
@@ -186,7 +186,7 @@ export function generateSalt() {
 
 ### HTML
 
-```
+```js
 const http = require("node:http")
 const fs = require("node:fs")
 
@@ -202,7 +202,7 @@ server.listen(3000, () => {
 
 For dinamic html
 
-```
+```js
 const http = require("node:http")
 const fs = require("node:fs")
 
@@ -226,7 +226,7 @@ server.listen(3000, () => {
 
 ### Routing
 
-```
+```js
 const http = require("node:http")
 const fs = require("node:fs")
 
@@ -255,7 +255,7 @@ server.listen(3000, () => {
 
 ### BODY
 
-```
+```js
 const getBody = async (req: http.IncomingMessage): Promise<BodyType | false> => {
   const promise: Promise<BodyType | false> = new Promise((resolve, reject) => {
     req.on("data", (chunk) => {
