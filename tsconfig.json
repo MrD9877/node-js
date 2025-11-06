@@ -1,14 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "CommonJS",
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ESNext", "DOM"],
+    "target": "ESNext",
     "esModuleInterop": true,
-    "declaration": true, // Generate .d.ts files for types
-    "skipLibCheck": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "tests"]
+    "strict": true,
+    "types": ["node"],
+    "outDir": "dist"
+  }
 }
